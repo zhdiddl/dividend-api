@@ -27,7 +27,7 @@ public class CompanyController {
 
     @GetMapping("autocomplete")
     public ResponseEntity<?> autoComplete(@RequestParam String keyword) {
-        var result = this.companyService.getCompanyNamesByKeyword(keyword);
+        var result = this.companyService.getCompanyNamesStartingWithKeyword(keyword);
         return ResponseEntity.ok(result);
     }
 
@@ -66,7 +66,7 @@ public class CompanyController {
         return ResponseEntity.ok(companyName);
     }
 
-    public void clearFinanceCache(String companyName) {
+    void clearFinanceCache(String companyName) {
         this.redisCacheManager.getCache(CacheKey.KEY_FINANCE).evict(companyName); // 캐시 삭제
         log.info("cleared cache for company: {}", companyName);
     }
