@@ -2,7 +2,7 @@ package sample.dividend.persist;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import sample.dividend.model.MemberEntity;
+import sample.dividend.persist.entity.MemberEntity;
 
 import java.util.Optional;
 

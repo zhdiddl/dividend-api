@@ -11,8 +11,8 @@ import sample.dividend.exception.imple.AlreadyExistUserException;
 import sample.dividend.exception.imple.NoAccountException;
 import sample.dividend.exception.imple.PasswordNotMatchedException;
 import sample.dividend.model.Auth;
-import sample.dividend.model.MemberEntity;
 import sample.dividend.persist.MemberRepository;
+import sample.dividend.persist.entity.MemberEntity;
 
 @Slf4j
 @Service
