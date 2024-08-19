@@ -1,4 +1,4 @@
-package sample.dividend.model;
+package sample.dividend.persist.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
