@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sample.dividend.exception.imple.AlreadyExistTickerException;
 import sample.dividend.exception.imple.NoCompanyException;
 import sample.dividend.model.Company;
@@ -65,10 +66,10 @@ public class CompanyService {
         return company;
     }
 
-    public List<String> getCompanyNamesByKeyword(String keyword) {
+    public List<String> getCompanyNamesStartingWithKeyword(String keyword) {
         Pageable limit = PageRequest.of(0, 10);
         Page<CompanyEntity> companyEntities = this.companyRepository.findByNameStartingWithIgnoreCase(keyword, limit);
-        return companyEntities.stream().map(e -> e.getName()).collect(Collectors.toList());
+        return companyEntities.stream().map(e -> e.getName()).sorted().collect(Collectors.toList()); // 오름차순 정렬
     }
 
     public void addAutocompleteKeyword(String keyword) {
@@ -81,10 +82,11 @@ public class CompanyService {
 //                .collect(Collectors.toList());
     }
 
-    public void deleteAutocompleteKeyword(String keyword) {
+    void deleteAutocompleteKeyword(String keyword) {
         this.trie.remove(keyword);
     }
 
+    @Transactional
     public String deleteCompany(String ticker) {
         var company = this.companyRepository.findByTicker(ticker)
                 .orElseThrow(() -> {
