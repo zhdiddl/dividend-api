@@ -44,6 +44,12 @@ public class YahooFinanceScraper implements Scraper{
             Elements parsingDivs = document.getElementsByAttributeValue("class", "table svelte-ewueuo");
             Element tableEle = parsingDivs.get(0);
 
+            // children 데이터가 없을 경우를 위해 방어 로직 추가
+            Elements children = tableEle.children();
+            if (children == null || children.isEmpty()) {
+                throw new RuntimeException("The table element does not have enough children to access tbody");
+            }
+
             Element tbody = tableEle.children().get(1);// Thead는 0, Tbody는 1, Tfoot은 2
 
             List<Dividend> dividends = new ArrayList<>();
